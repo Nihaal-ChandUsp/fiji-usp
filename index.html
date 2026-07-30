@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fiji Campus Bus & Weather Dashboard</title>
+
+<style>
+    /* Basic page styling */
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f7fb;
+        margin: 0;
+        padding: 20px;
+        color: #333;
+    }
+
+    .container {
+        max-width: 700px;
+        margin: auto;
+        background: #ffffff;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        text-align: center;
+        color: #005b96;
+    }
+
+    .card {
+        background: #eef5ff;
+        padding: 18px;
+        border-radius: 10px;
+        margin-top: 20px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+    }
+
+    input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 12px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        box-sizing: border-box;
+    }
+
+    button {
+        background: #0078d4;
+        color: white;
+        border: none;
+        padding: 10px 16px;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #005ea6;
+    }
+
+    #result {
+        margin-top: 12px;
+        font-size: 1.1rem;
+        font-weight: bold;
+    }
+
+    .weather-box {
+        margin-top: 10px;
+        padding: 12px;
+        background: #fff;
+        border-left: 4px solid #0078d4;
+        border-radius: 6px;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🚌 Fiji Campus Bus & Weather Dashboard</h1>
+
+    <!-- Bus Fare Calculator -->
+    <div class="card">
+        <h2>Bus Fare Calculator</h2>
+
+        <label for="budget">Enter Your Bus Fare Budget (FJD)</label>
+        <input
+            type="number"
+            id="budget"
+            placeholder="e.g. 20"
+            step="0.01">
+
+        <button onclick="calculateRides()">Calculate Rides</button>
+
+        <div id="result"></div>
+    </div>
+
+    <!-- Weather Forecast -->
+    <div class="card">
+        <h2>Today's Weather Forecast - Suva</h2>
+
+        <div class="weather-box">
+            <p><strong>Location:</strong> Suva, Fiji</p>
+            <p><strong>Forecast:</strong> Partly cloudy with scattered showers</p>
+            <p><strong>Temperature:</strong> 24°C - 29°C</p>
+            <p><strong>Humidity:</strong> 78%</p>
+            <p><strong>Wind:</strong> Moderate southeast breeze</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Cost of one bus ride in FJD
+    const FARE_PER_RIDE = 1.50;
+
+    function calculateRides() {
+        // Get the user's input
+        const budgetInput = document.getElementById("budget").value;
+        const budget = parseFloat(budgetInput);
+
+        // Reference to the result area
+        const result = document.getElementById("result");
+
+        // Validate input:
+        // - Empty field
+        // - Non-numeric value
+        // - Negative number
+        if (budgetInput.trim() === "" || isNaN(budget) || budget < 0) {
+            result.textContent =
+                "Please enter a valid positive dollar amount.";
+            result.style.color = "red";
+            return;
+        }
+
+        // Calculate how many rides the student can afford
+        const rides = Math.floor(budget / FARE_PER_RIDE);
+
+        // Display successful result
+        result.textContent =
+            `You can afford ${rides} bus ride(s) with FJD $${budget.toFixed(2)}.`;
+        result.style.color = "green";
+    }
+</script>
+
+</body>
+</html>
